@@ -44,6 +44,7 @@ class User implements UserInterface
      */
     private $structure_id;
 
+
     public function getId(): ?int
     {
         return $this->id;

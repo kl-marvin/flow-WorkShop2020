@@ -1,21 +1,79 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Dashboard {% endblock %}
-
 {% block body %}
-    <div class="container mt-4">
+    <div class="container-fluid mt-4 container--dashboard">
             <div class="row">
-                <div>
+                <div class="col-2" style="border-right: 1px solid black;">
+
+                    <h2>FLOW</h2>
+                    <h5>Espace Professionnels</h5>
+                    <nav class="nav flex-column mt-4">
+                        <a class="nav-link" href="{{ path('home') }}">Site client</a>
+                        <a class="nav-link" href="{{ path('dashboard') }}">Infos pratiques</a>
+                        <a class="nav-link" href="#">Taux d'affluence</a>
+                        <a class="nav-link" href="#">Contact</a>
+                        <hr>
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </nav>
+                </div>
+                <div class="col-8">
                     {% for detail in userDetails %}
                     <h1>Bonjour, {{ detail.compagnyName }}</h1>
-                    <p>Bienvenue sur votre espace d'administration</p>
+                    <h6>Bienvenue sur votre espace d'administration</h6>
 
-                     <h5>Les infos pratiques de votre commerce</h5>
+                        <div class="text-center mt-5">
+                            <img src="/images/structures/{{ detail.structureId.imageName }}" class="img-fluid" height="80" alt="imageStructuyre" >
+                        </div>
+
+                     <h5 class="mb-4 mt-5">Les infos pratiques de votre commerce <div class="d-inline"><button type="button" class="btn btn-primary">Modifier</button></div></h5>
                       <p>Téléphone : {{ detail.structureId.phone }} </p>
+                      <p>
+                          Adresse :
+                          {{ detail.structureId.streetNumber }},
+                          {{ detail.structureId.streetName }}
+                          {{ detail.structureId.zipCode }}
+                          {{ detail.structureId.city }} -  {{ detail.structureId.country }}
+                      </p>
 
+                        <h5 class="mb-4 mt-4">Les horaires de votre commerce <div class="d-inline"><button type="button" class="btn btn-primary">Modifier</button></div></h5>
+                    {% endfor %}
+                    {% for businessHour in businessHours %}
+                        {% if businessHour.day == 1 %}
+                            <p class="font-weight-bold">Lundi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% elseif businessHour.day == 2 %}
+                            <p class="font-weight-bold">Mardi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% elseif businessHour.day == 3 %}
+                        <p class="font-weight-bold">Mercredi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% elseif businessHour.day == 4 %}
+                        <p class="font-weight-bold">Jeudi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% elseif businessHour.day == 5 %}
+                            <p class="font-weight-bold">Vendredi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                       <hr>
+                        {% elseif businessHour.day == 6 %}
+                            <p class="font-weight-bold">Samedi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% elseif businessHour.day == 7 %}
+                                <p class="font-weight-bold">Dimanche : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
-
+    </div>
+    <div class="container-fluid mt-5" style="padding-left: 0px; padding-right: 0px;">
+        <footer class="footer p-3 " style="border-top: solid 1px black">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-left">Copyright © Flow 2020</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-right">
+                        <a class="mr-3" href="#!">Mentions légales</a>
+                        <a href="#!">Politique de confidentialités</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 {% endblock %}

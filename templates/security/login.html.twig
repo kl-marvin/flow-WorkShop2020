@@ -1,42 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Espace pro - Connection{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <body class="container--login">
+    <div class="container">
+        <div class="row">
+            <div class="offset-3 col-6 card--section ">
+                {%  for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="offset-1 col-10">
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <div class="text-center">
+                            <img src="assets/img/diagram.svg" width=90 class="mb-1">
+                            <h1 class="mb-5 title">Flow</h1>
+                            <h3>Espace professionnels</h3>
+                        </div>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        <p class=" mb-4 text-center">Pour accéder à cet espace, merci de vous connecter.</p>
+                        <input type="email"  placeholder="Email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control " required autofocus>
+                        <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control mt-3" required>
+                        <div  class="float-right" >
+                            <a href="#" class="reset--pwd">Mot de passe oublié ?</a>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="text-center">
+                            <button class=" btnSignIn btn-block  mt-5" type="submit">
+                                Connexion
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </div>
+
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Merci de vous connecter</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    </div>
+    </body>
 {% endblock %}
