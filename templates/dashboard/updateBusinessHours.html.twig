@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2" style="border-right: 1px solid black;">
+
+                <h2>FLOW</h2>
+                <h5>Espace Professionnels</h5>
+                <nav class="nav flex-column mt-4">
+                    <a class="nav-link" href="{{ path('home') }}">Site client</a>
+                    <a class="nav-link" href="{{ path('dashboard') }}">Infos pratiques</a>
+                    <a class="nav-link" href="#">Taux d'affluence</a>
+                    <a class="nav-link" href="#">Contact</a>
+                    <hr>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                </nav>
+            </div>
+
+            <div class="col-8 mt-3">
+                <h2 class="mb-3">Modifier les horaires de votre structure </h2>
+                {{ form_start(form) }}
+
+                {% if businessHour.day == 1 %}
+                    <h5>Les horaires du Lundi</h5>
+                 {% elseif businessHour.day == 2 %}
+                     <h5>Les horaires du Mardi</h5>
+                 {% elseif businessHour.day == 3 %}
+                     <h5>Les horaires du Mercredi</h5>
+                 {% elseif businessHour.day == 4 %}
+                     <h5>Les horaires du Jeudi</h5>
+                 {% elseif businessHour.day == 5 %}
+                     <h5>Les horaires du Vendredi</h5>
+                 {% elseif businessHour.day == 6 %}
+                     <h5>Les horaires du Samedi</h5>
+                 {% elseif businessHour.day == 7 %}
+                     <h5>Les horaires du Dimanche</h5>
+                {% endif %}
+
+                <div class="col-4">
+                    {{ form_row(form.openTime) }}
+                    {{ form_row(form.closeTime) }}
+                </div>
+
+
+                <button type="submit" class="btn-primary btn  ">Mettre à jour</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

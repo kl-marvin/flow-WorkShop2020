@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block title %}{% endblock %}
+
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2" style="border-right: 1px solid black;">
+
+                <h2>FLOW</h2>
+                <h5>Espace Professionnels</h5>
+                <nav class="nav flex-column mt-4">
+                    <a class="nav-link" href="{{ path('home') }}">Site client</a>
+                    <a class="nav-link" href="{{ path('dashboard') }}">Infos pratiques</a>
+                    <a class="nav-link" href="#">Taux d'affluence</a>
+                    <a class="nav-link" href="#">Contact</a>
+                    <hr>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                </nav>
+            </div>
+
+            <div class="col-8 mt-3">
+                <h2>Compléter le formulaire pour modifier les données</h2>
+                {{ form_start(form) }}
+                <button type="submit" class="btn-primary btn ">Mettre à jour</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+

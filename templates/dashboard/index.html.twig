@@ -20,12 +20,20 @@
                     {% for detail in userDetails %}
                     <h1>Bonjour, {{ detail.compagnyName }}</h1>
                     <h6>Bienvenue sur votre espace d'administration</h6>
+                        {%  for message in app.flashes('success') %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                               {{message}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
 
                         <div class="text-center mt-5">
                             <img src="/images/structures/{{ detail.structureId.imageName }}" class="img-fluid" height="80" alt="imageStructuyre" >
                         </div>
 
-                     <h5 class="mb-4 mt-5">Les infos pratiques de votre commerce <div class="d-inline"><button type="button" class="btn btn-primary">Modifier</button></div></h5>
+                     <h5 class="mb-4 mt-5">Les infos pratiques de votre structure <div class="d-inline"><a type="button" class="btn btn-primary" href="{{ path('update_structure_details', {id: detail.structureId.id}) }}">Modifier</a></div></h5>
                       <p>Téléphone : {{ detail.structureId.phone }} </p>
                       <p>
                           Adresse :
@@ -35,24 +43,58 @@
                           {{ detail.structureId.city }} -  {{ detail.structureId.country }}
                       </p>
 
-                        <h5 class="mb-4 mt-4">Les horaires de votre commerce <div class="d-inline"><button type="button" class="btn btn-primary">Modifier</button></div></h5>
+                        <h5 class="mb-4 mt-5">Les horaires de votre structure </h5>
                     {% endfor %}
                     {% for businessHour in businessHours %}
                         {% if businessHour.day == 1 %}
-                            <p class="font-weight-bold">Lundi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                            <p class="font-weight-bold">Lundi :
+                                    <span class="font-weight-light">
+                                        {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                    <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                                    </span>
+                            </p>
                         {% elseif businessHour.day == 2 %}
-                            <p class="font-weight-bold">Mardi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                            <p class="font-weight-bold">Mardi :
+                                <span class="font-weight-light">
+                                    {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                    <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                                </span> </p>
                         {% elseif businessHour.day == 3 %}
-                        <p class="font-weight-bold">Mercredi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        <p class="font-weight-bold">Mercredi :
+                            <span class="font-weight-light">
+                                {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                            </span>
+                        </p>
                         {% elseif businessHour.day == 4 %}
-                        <p class="font-weight-bold">Jeudi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                        <p class="font-weight-bold">Jeudi :
+                            <span class="font-weight-light">
+                                {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                            </span>
+                        </p>
                         {% elseif businessHour.day == 5 %}
-                            <p class="font-weight-bold">Vendredi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                            <p class="font-weight-bold">Vendredi :
+                                <span class="font-weight-light">
+                                    {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                    <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                                </span>
+                            </p>
                        <hr>
                         {% elseif businessHour.day == 6 %}
-                            <p class="font-weight-bold">Samedi : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                            <p class="font-weight-bold">Samedi :
+                                <span class="font-weight-light">
+                                    {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                    <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                                </span>
+                            </p>
                         {% elseif businessHour.day == 7 %}
-                                <p class="font-weight-bold">Dimanche : <span class="font-weight-light">{{ businessHour.openTime }} | {{ businessHour.closeTime }}</span> </p>
+                                <p class="font-weight-bold">Dimanche :
+                                    <span class="font-weight-light">
+                                        {{ businessHour.openTime }} | {{ businessHour.closeTime }}
+                                        <a type="button" class="btn btn-primary" href="{{ path('update_business_hours', {id: businessHour.id}) }}"><img src="{{ asset('assets/img/crayon.svg') }}" width="18"></a>
+                                    </span>
+                                </p>
                         {% endif %}
                     {% endfor %}
                 </div>
