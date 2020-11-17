@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,12 +12,18 @@ class DashboardController extends AbstractController
 {
     /**
      * @Route("/dashboard", name="dashboard")
-     *  @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
+     * @param UserRepository $userRepository
+     * @return Response
      */
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
+
+        $userDetails = $userRepository->findAll();
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
+            'userDetails' => $userDetails
         ]);
     }
 }
