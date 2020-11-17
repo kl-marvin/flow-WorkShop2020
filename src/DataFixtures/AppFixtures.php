@@ -28,6 +28,7 @@ class AppFixtures extends Fixture
        $user->setRoles(['ROLE_ADMIN']);
        $user->setCompagnyName("La Poste Cergy");
        $manager->persist($user);
+
        $manager->flush();
     }
 }
