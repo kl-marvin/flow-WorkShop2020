@@ -39,6 +39,11 @@ class User implements UserInterface
      */
     private $compagnyName;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Structure::class, cascade={"persist", "remove"})
+     */
+    private $structure_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +130,18 @@ class User implements UserInterface
     public function setCompagnyName(string $compagnyName): self
     {
         $this->compagnyName = $compagnyName;
+
+        return $this;
+    }
+
+    public function getStructureId(): ?Structure
+    {
+        return $this->structure_id;
+    }
+
+    public function setStructureId(?Structure $structure_id): self
+    {
+        $this->structure_id = $structure_id;
 
         return $this;
     }

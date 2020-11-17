@@ -20,6 +20,7 @@ class DashboardController extends AbstractController
     {
 
         $userDetails = $userRepository->findAll();
+        dump($userDetails);
 
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
