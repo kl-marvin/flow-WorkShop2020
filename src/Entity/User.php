@@ -42,7 +42,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToOne(targetEntity=Structure::class, cascade={"persist", "remove"})
      */
-    private $structure_id;
+    private $structure;
 
 
     public function getId(): ?int
@@ -135,14 +135,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getStructureId(): ?Structure
+    public function getStructure(): ?Structure
     {
-        return $this->structure_id;
+        return $this->structure;
     }
 
-    public function setStructureId(?Structure $structure_id): self
+    public function setStructure(?Structure $structure): self
     {
-        $this->structure_id = $structure_id;
+        $this->structure = $structure;
 
         return $this;
     }

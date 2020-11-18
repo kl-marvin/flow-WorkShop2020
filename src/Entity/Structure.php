@@ -87,11 +87,17 @@ class Structure
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Affluence::class, mappedBy="structure")
+     */
+    private $affluences;
+
 
 
     public function __construct()
     {
         $this->businessHours = new ArrayCollection();
+        $this->affluences = new ArrayCollection();
     }
 
 
@@ -243,5 +249,35 @@ class Structure
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     * @return Collection|Affluence[]
+     */
+    public function getAffluences(): Collection
+    {
+        return $this->affluences;
+    }
+
+    public function addAffluence(Affluence $affluence): self
+    {
+        if (!$this->affluences->contains($affluence)) {
+            $this->affluences[] = $affluence;
+            $affluence->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAffluence(Affluence $affluence): self
+    {
+        if ($this->affluences->removeElement($affluence)) {
+            // set the owning side to null (unless already changed)
+            if ($affluence->getStructure() === $this) {
+                $affluence->setStructure(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+
+        const options = {
+            chart: {
+                type: 'heatmap'
+            },
+            plotOptions: {
+                heatmap: {
+                    colorScale: {
+                        ranges: [{
+                            from: 0,
+                            to: 50,
+                            color: '#00FF00',
+                            name: 'low',
+                        },
+                            {
+                                from: 50,
+                                to: 200,
+                                color: '#FFA500',
+                                name: 'medium',
+                            },
+                            {
+                                from: 200,
+                                to:500,
+                                color: '#ff0000',
+                                name: 'high',
+                            }
+                        ]
+                    }
+                }
+            },
+            series: [
+                {% set day = null %}
+                {%- for affluence in affluences   -%}
+                    {%- if not loop.first and affluence.startTime|date('l') != day -%}
+                        {{ "]}"|raw }}
+                        {%- if not loop.last -%}
+                            {{ ',' }}
+                        {%- endif -%}
+                    {%- endif -%}
+                    {%- if affluence.startTime|date('l') != day -%}
+                        {{ ("{name: '" ~ affluence.startTime|date('l') ~ "', data: [")|raw }}
+                    {%- endif -%}
+                    {{ ("{x: '" ~ affluence.startTime|date('H\\h') ~ "-" ~ affluence.endTime|date('H\\h') ~ "',  y: " ~ affluence.numberOfPeople ~ "},")|raw }}
+
+                    {% if loop.last %}
+                        {{ "]}"|raw }}
+                    {% endif %}
+
+                    {% set day = affluence.startTime|date('l') %}
+                {%- endfor -%}
+            ]
+        };
+
+
+
+    const chart = new ApexCharts(document.querySelector("#chart"), options);
+
+    chart.render();
+
+
+
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4 container--dashboard">
+    <div class="row">
+        <div class="col-2" style="border-right: 1px solid black;">
+
+            <h2>FLOW</h2>
+            <h5>Espace Professionnels</h5>
+            <nav class="nav flex-column mt-4">
+                <a class="nav-link" href="{{ path('home') }}">Site client</a>
+                <a class="nav-link" href="{{ path('dashboard') }}">Infos pratiques</a>
+                <a class="nav-link" href="{{ path('affluence_dashboard') }}">Taux d'affluence</a>
+                <a class="nav-link" href="#">Contact</a>
+                <hr>
+                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+            </nav>
+        </div>
+
+        <div class="col-8">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+            <h1>Gérer ici l'affluence de votre structure</h1>
+            {{ form_start(form) }}
+            <div class="col-2">
+                {{ form_row(form.numberOfPeople) }}
+            </div>
+            <div class="col-5">
+                {{ form_row(form.StartTime) }}
+                {{ form_row(form.endTime) }}
+                <button type="submit" class="btn-primary btn  ">Ajouter</button>
+            </div>
+            {{ form_end(form) }}
+
+
+
+
+            <div id="chart">
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+<div class="container-fluid mt-5 sticky-bottom" style="padding-left: 0px; padding-right: 0px;" fixed-bottom>
+    <footer class="footer p-3 " style="border-top: solid 1px black">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-lg-left">Copyright © Flow 2020</div>
+                <div class="col-lg-4 my-3 my-lg-0">
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="col-lg-4 text-lg-right">
+                    <a class="mr-3" href="#!">Mentions légales</a>
+                    <a href="#!">Politique de confidentialités</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
+
+
