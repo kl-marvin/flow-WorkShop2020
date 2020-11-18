@@ -17,20 +17,20 @@
                         ranges: [{
                             from: 0,
                             to: 50,
-                            color: '#00FF00',
-                            name: 'low',
+                            color: '#2b9943',
+                            name: 'Peu de  visiteurs',
                         },
                             {
                                 from: 50,
                                 to: 200,
-                                color: '#FFA500',
-                                name: 'medium',
+                                color: '#eb6e15',
+                                name: 'Niveau intermédiare',
                             },
                             {
                                 from: 200,
                                 to:500,
-                                color: '#ff0000',
-                                name: 'high',
+                                color: '#ba1e09',
+                                name: 'Beaucoup de visiteurs',
                             }
                         ]
                     }
@@ -46,7 +46,7 @@
                         {%- endif -%}
                     {%- endif -%}
                     {%- if affluence.startTime|date('l') != day -%}
-                        {{ ("{name: '" ~ affluence.startTime|date('l') ~ "', data: [")|raw }}
+                        {{ ("{name: '" ~ affluence.startTime|date('d/m/Y') ~ "', data: [")|raw }}
                     {%- endif -%}
                     {{ ("{x: '" ~ affluence.startTime|date('H\\h') ~ "-" ~ affluence.endTime|date('H\\h') ~ "',  y: " ~ affluence.numberOfPeople ~ "},")|raw }}
 
@@ -109,16 +109,11 @@
             {{ form_end(form) }}
 
 
-
+            <h1 class="mt-5 text-center">Schéma de l'affluence de votre structure</h1>
 
             <div id="chart">
-
             </div>
-
-
         </div>
-
-
     </div>
 </div>
 <div class="container-fluid mt-5 sticky-bottom" style="padding-left: 0px; padding-right: 0px;" fixed-bottom>

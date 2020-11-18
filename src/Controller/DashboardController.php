@@ -27,6 +27,16 @@ class DashboardController extends AbstractController
         $this->em = $em;
     }
 
+
+    /**
+     * @Route("/homePro", name="homePro")
+     */
+    public function homePro(){
+        return $this->render('dashboard/indexPro.html.twig', [
+
+        ]);
+    }
+
     /**
      * @Route("/dashboard", name="dashboard")
      * @IsGranted("ROLE_ADMIN")
@@ -37,7 +47,7 @@ class DashboardController extends AbstractController
     public function index(UserRepository $userRepository, BusinessHoursRepository $businessHoursRepository): Response
     {
         $idUser = $this->getUser()->getId();
-        $userStructureId = $this->getUser()->getStructureId();
+        $userStructureId = $this->getUser()->getStructure();
 
         $userDetails = $userRepository->findBy(['id' => $idUser]);
         $businessHours = $businessHoursRepository->findBy(['structure' =>  $userStructureId]);

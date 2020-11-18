@@ -30,17 +30,17 @@
                         {% endfor %}
 
                         <div class="text-center mt-5">
-                            <img src="/images/structures/{{ detail.structureId.imageName }}" class="img-fluid" height="80" alt="imageStructuyre" >
+                            <img src="/images/structures/{{ detail.structure.imageName }}" class="img-fluid" height="80" alt="imageStructuyre" >
                         </div>
 
-                     <h5 class="mb-4 mt-5">Les infos pratiques de votre structure <div class="d-inline"><a type="button" class="btn btn-primary" href="{{ path('update_structure_details', {id: detail.structureId.id}) }}">Modifier</a></div></h5>
-                      <p>Téléphone : {{ detail.structureId.phone }} </p>
+                     <h5 class="mb-4 mt-5">Les infos pratiques de votre structure <div class="d-inline"><a type="button" class="btn btn-primary" href="{{ path('update_structure_details', {id: detail.structure.id}) }}">Modifier</a></div></h5>
+                      <p>Téléphone : {{ detail.structure.phone }} </p>
                       <p>
                           Adresse :
-                          {{ detail.structureId.streetNumber }},
-                          {{ detail.structureId.streetName }}
-                          {{ detail.structureId.zipCode }}
-                          {{ detail.structureId.city }} -  {{ detail.structureId.country }}
+                          {{ detail.structure.streetNumber }},
+                          {{ detail.structure.streetName }}
+                          {{ detail.structure.zipCode }}
+                          {{ detail.structure.city }} -  {{ detail.structure.country }}
                       </p>
 
                         <h5 class="mb-4 mt-5">Les horaires de votre structure </h5>

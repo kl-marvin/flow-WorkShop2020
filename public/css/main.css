@@ -1,0 +1,42 @@
+header.masthead2 {
+    padding-top: 10.5rem;
+    padding-bottom: 6rem;
+    text-align: center;
+    min-height: 760px;
+    color: #fff;
+    background-image: url("../assets/img/peoplewaiting.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+header.masthead2 .masthead-subheading {
+    font-size: 32px!important;
+    line-height: 1.5rem;
+    color: #fed136;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+header.masthead2 .masthead-heading {
+    font-size: 82px!important;
+    font-weight: 700;
+    line-height: 3.25rem;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@media (min-width: 868px) {
+    header.masthead2 {
+        padding-top: 8rem;
+        padding-bottom: 12.5rem;
+    }
+    header.masthead2 .masthead-subheading {
+        font-size: 6.3rem;
+        font-weight: 500;
+        line-height: 2.4rem;
+        margin-bottom: 1.3rem;
+    }
+    header.masthead2 .masthead-heading {
+        font-weight: 700;
+        line-height: 4.5rem;
+
+    }
+}
