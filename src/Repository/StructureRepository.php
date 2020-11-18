@@ -19,6 +19,7 @@ class StructureRepository extends ServiceEntityRepository
         parent::__construct($registry, Structure::class);
     }
 
+
     // /**
     //  * @return Structure[] Returns an array of Structure objects
     //  */

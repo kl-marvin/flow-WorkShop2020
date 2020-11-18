@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% block title %}{% endblock %}
 
 {% block body %}
@@ -30,14 +32,37 @@
             <div class="masthead-heading text-uppercase">Découvrez flow</div>
             <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">En savoir plus</a>
         </div>
+        <section style="padding-top: 80px;">
+            <div class="row">
+                <div class="offset-3 col-6">
+                    <h2 class="text-center">Alors il y a du monde ?</h2>
+
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-10">
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="2">
+                                <button class="btn btn-warning ml-1" type="submit">Rechercher</button>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                </div>
+            </div>
+        </section>
+
     </header>
     <!-- Services-->
+
+
+
     <section class="page-section" id="services" style="padding-bottom: 0px;">
         <div class="container">
             <div class="text-center">
                 <h3 class="section-heading text-uppercase ">Flow vous permet d’accéder à l’affluence des infrastructures publiques afin de gagner en efficacité.</h3>
             </div>
         </div>
+
     </section>
     <!-- About-->
     <section class="page-section" id="about">
@@ -97,6 +122,10 @@
             </ul>
         </div>
     </section>
+
+
+
+
     <!-- Team-->
     <section class="page-section bg-light" id="team">
         <div class="container">
