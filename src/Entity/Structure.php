@@ -92,6 +92,16 @@ class Structure
      */
     private $affluences;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $StructureName;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     */
+    private $map;
+
 
 
     public function __construct()
@@ -277,6 +287,30 @@ class Structure
                 $affluence->setStructure(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStructureName(): ?string
+    {
+        return $this->StructureName;
+    }
+
+    public function setStructureName(?string $StructureName): self
+    {
+        $this->StructureName = $StructureName;
+
+        return $this;
+    }
+
+    public function getMap(): ?string
+    {
+        return $this->map;
+    }
+
+    public function setMap(?string $map): self
+    {
+        $this->map = $map;
 
         return $this;
     }

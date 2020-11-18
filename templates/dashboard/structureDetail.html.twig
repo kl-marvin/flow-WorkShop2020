@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+
+        const options = {
+            chart: {
+                type: 'heatmap'
+            },
+            plotOptions: {
+                heatmap: {
+                    colorScale: {
+                        ranges: [{
+                            from: 0,
+                            to: 50,
+                            color: '#4feaff',
+                            name: 'Peu de  visiteurs',
+                        },
+                            {
+                                from: 50,
+                                to: 200,
+                                color: '#2986c4',
+                                name: 'Niveau intermédiare',
+                            },
+                            {
+                                from: 200,
+                                to:500,
+                                color: '#144299',
+                                name: 'Beaucoup de visiteurs',
+                            }
+                        ]
+                    }
+                }
+            },
+            series: [
+                {% set day = null %}
+                {%- for affluence in affluences   -%}
+                {%- if not loop.first and affluence.startTime|date('l') != day -%}
+                {{ "]}"|raw }}
+                {%- if not loop.last -%}
+                {{ ',' }}
+                {%- endif -%}
+                {%- endif -%}
+                {%- if affluence.startTime|date('l') != day -%}
+                {{ ("{name: '" ~ affluence.startTime|date('d/m/Y') ~ "', data: [")|raw }}
+                {%- endif -%}
+                {{ ("{x: '" ~ affluence.startTime|date('H\\h') ~ "-" ~ affluence.endTime|date('H\\h') ~ "',  y: " ~ affluence.numberOfPeople ~ "},")|raw }}
+
+                {% if loop.last %}
+                {{ "]}"|raw }}
+                {% endif %}
+
+                {% set day = affluence.startTime|date('l') %}
+                {%- endfor -%}
+            ]
+        };
+
+
+
+        const chart = new ApexCharts(document.querySelector("#chart"), options);
+
+        chart.render();
+
+
+
+    </script>
+{% endblock %}
+
+{% block body %}
+
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/diagram.svg"  alt="" /></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">A propos</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold" href="{{ path('homePro') }}">Espace Pro</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+{% for detail in structureDetails %}
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase " style="margin-bottom: 2px;">
+            {{ detail.structureName }}
+        </div>
+        <div class="masthead-subheading text-uppercase " style="margin-top:0px;">
+            {{ detail.city }}
+        </div>
+    </div>
+</header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center" style="margin-top:-180px; margin-bottom: 30px">
+                <img src="/images/structures/{{ detail.imageName }}" class="img-fluid" height="80" alt="imageStructure" style="  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);" >
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="text-center">
+            <h2 class="mb-3">Les horaires</h2>
+            <div class="row text-center justify-content-center mb-4">
+                {% for businessHour in businessDetails %}
+                    {% if businessHour.day == 1 %}
+                <div class="col-1">
+                    <span class="font-weight-bold">Lundi</span><br>
+                    <span> {{ businessHour.openTime }} </span><br>
+                    <span>{{  businessHour.closeTime }}</span>
+                </div>
+                    {% elseif businessHour.day == 2 %}
+                <div class="col-1">
+                    <span class="font-weight-bold">Mardi</span><br>
+                    <span> {{ businessHour.openTime }} </span><br>
+                    <span>{{  businessHour.closeTime }}</span>
+                </div>
+                {% elseif businessHour.day == 3 %}
+                    <div class="col-1">
+                        <span class="font-weight-bold">Mercredi</span><br>
+                        <span> {{ businessHour.openTime }} </span><br>
+                        <span>{{  businessHour.closeTime }}</span>
+                    </div>
+                {% elseif businessHour.day == 4 %}
+                    <div class="col-1">
+                        <span class="font-weight-bold">Jeudi</span><br>
+                        <span> {{ businessHour.openTime }} </span><br>
+                        <span>{{  businessHour.closeTime }}</span>
+                    </div>
+                {% elseif businessHour.day == 5 %}
+                    <div class="col-1">
+                        <span class="font-weight-bold">Vendredi</span><br>
+                        <span> {{ businessHour.openTime }} </span><br>
+                        <span>{{  businessHour.closeTime }}</span>
+                    </div>
+                {% elseif businessHour.day == 6 %}
+                    <div class="col-1">
+                        <span class="font-weight-bold">Samedi</span><br>
+                        <span> {{ businessHour.openTime }} </span><br>
+                        <span>{{  businessHour.closeTime }}</span>
+                    </div>
+                {% elseif businessHour.day == 7 %}
+                    <div class="col-1">
+                        <span class="font-weight-bold">Dimanche</span><br>
+                        <span> {{ businessHour.openTime }} </span><br>
+                        <span>{{  businessHour.closeTime }}</span>
+                    </div>
+                {% endif %}
+
+
+                {% endfor %}
+            </div>
+            <h2 class="mt-5 mb-3">L'affluence ces derniers jours</h2>
+            <div  class="offset-2 col-8" id="chart">
+            </div>
+
+            <h2 class="mb-4 mt-5">Informations pratiques</h2>
+            <div class="row justify-content-center mb-5">
+                <div class="col-4">
+                    <h5>Nous contacter</h5>
+                    <span><i class="fa fa-phone" aria-hidden="true"></i> {{ detail.phone }}</span>
+                </div>
+                <div class="col-4">
+                    <h5>Adresse</h5>
+                    <span>
+                        {{ detail.streetNumber }},
+                        {{ detail.streetName }}
+                        {{ detail.zipCode }}
+                        {{ detail.city }} -  {{ detail.country }}
+                    </span>
+                </div>
+            </div>
+
+            <iframe src="{{ detail.map }}" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+
+        </div>
+    </div>
+
+    <div class="container-fluid mt-4 sticky-bottom" style="padding-left: 0px; padding-right: 0px;">
+        <footer class="footer p-3 ">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-left">Copyright © Flow 2020</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-right">
+                        <a class="mr-3" href="#!">Mentions légales</a>
+                        <a href="#!">Politique de confidentialités</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endfor %}
+
+
+{% endblock %}
+
+

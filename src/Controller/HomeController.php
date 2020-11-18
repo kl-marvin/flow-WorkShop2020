@@ -47,20 +47,21 @@ class HomeController extends AbstractController
             $name = $form->getData()['name'];// on récupère les données du formulaire sans passé par une
             // entité (filter_input)
             if ($name != "") {
-                $articles = $this->getDoctrine()
+                $results = $this->getDoctrine()
                     ->getRepository(User::class)
                     ->search('%' . $name . '%');
 
                 $message = "";
-                if ($articles == []) {
+                if ($results == []) {
                     $message = "Pas de résultat pour '$name'. ";
                 }
 
-                dump($articles);
+                dump($results);
 
                 return $this->render('dashboard/resulat.html.twig', [
-                    'articles' => $articles,
-                    'message' => $message
+                    'results' => $results,
+                    'message' => $message,
+                    'form' => $form->createView(),
                 ]);
             }
         }

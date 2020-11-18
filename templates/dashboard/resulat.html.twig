@@ -1,10 +1,97 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
 
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{{ asset('assets/img/diagram.svg') }}"  alt="" /></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">A propos</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold" href="{{ path('homePro') }}">Espace Pro</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading text-uppercase ">Résultats de votre recherche</div>
+    </div>
+
+</header>
+
+        <div class="text-center mt-5">
+            <h2>{{ message }}</h2>
+        </div>
+
+    <section style="padding-top: 10px;">
+        <div class="row">
+            <div class="offset-3 col-6">
+                <h5 class="text-center">Nouvelle recherche</h5>
+
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-10">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="2">
+                        <button class="btn btn-warning ml-1" type="submit">Rechercher</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+
+    <div class="mt-5 offset-2 col-10">
+        {% for result in results  %}
+        <div class="col-2">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="/images/structures/{{ result.structure.imageName }}" alt="Card image cap">
+
+                <div class="card-body">
+
+                    <h5 class="card-title text-center mb-3"> {{ result.compagnyName }}</h5>
+                    <hr>
+                    <p class="card-text"> <span><i class="fas fa-phone"></i></span> {{ result.structure.phone }}</p>
+                    <p> <span><i class="fas fa-map-marker-alt"></i></span>
+                        {{ result.structure.streetNumber }},
+                        {{ result.structure.streetName }}
+                        {{ result.structure.zipCode }}
+                        {{ result.structure.city }} -  {{ result.structure.country }}
+                    </p>
+                </div>
+
+                <div class="card-body text-center">
+                    <a type="button" class="btn btn-primary" href="{{ path('strucuture_details_client', {id: result.structure.id}) }}">Plus d'infos</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
 
-{% block title %}
-
-{% endblock %}
 

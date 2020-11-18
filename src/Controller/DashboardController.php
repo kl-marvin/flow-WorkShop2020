@@ -6,7 +6,9 @@ use App\Entity\BusinessHours;
 use App\Entity\Structure;
 use App\Form\UpdateBusinessHoursType;
 use App\Form\UpdateStructureInfoType;
+use App\Repository\AffluenceRepository;
 use App\Repository\BusinessHoursRepository;
+use App\Repository\StructureRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -115,4 +117,33 @@ class DashboardController extends AbstractController
 
         ]);
     }
+
+
+    /**
+     * @Route("/structure_details/{id}", name="strucuture_details_client")
+     * @param AffluenceRepository $affluenceRepository
+     * @param StructureRepository $structureRepository
+     * @param BusinessHoursRepository $businessHoursRepository
+     * @param $id
+     * @return Response
+     */
+    public function structureDetails(AffluenceRepository $affluenceRepository, StructureRepository $structureRepository, BusinessHoursRepository $businessHoursRepository, $id){
+
+        $structureDetails = $structureRepository->findBy(['id' => $id]);
+        $buisinessDetails = $businessHoursRepository->findBy(['structure' => $id]);
+        $affluencesData = ($affluenceRepository->findDataByStructureId($id));
+
+        dump($affluencesData);
+
+
+
+        return $this->render('dashboard/structureDetail.html.twig', [
+            'structureDetails' => $structureDetails,
+            'businessDetails' => $buisinessDetails,
+            "affluences" => $affluencesData
+
+        ]);
+
+    }
+
 }
